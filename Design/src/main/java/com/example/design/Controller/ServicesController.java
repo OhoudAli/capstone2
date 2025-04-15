@@ -57,22 +57,13 @@ public class ServicesController {
         boolean deleted = servicesService.deleteService(id);
         return deleted ? ResponseEntity.ok("Service deleted successfully") : ResponseEntity.status(404).body("Service not found");
     }
-//    @PostMapping("/request-shopping-assistance/{customerId}/{designerId}")
-//    public ResponseEntity requestShoppingAssistance(@PathVariable Integer customerId, @PathVariable Integer designerId, @RequestBody@Valid String details, Errors errors) {
-//        if(errors.hasErrors()){
-//            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-//        }
-//        servicesService.requestShoppingAssistance(customerId, designerId,details);
-//        return ResponseEntity.status(200).body("Shopping assistance request sent.");
-//    }
+
 
 //worked:)   1    but scheck the logic
-    @PostMapping("/request-shopping-assistance")
-    public ResponseEntity requestShoppingAssistance(@RequestBody @Valid Services services, Errors errors) {
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
-        servicesService.requestShoppingAssistance(services);
+    @PostMapping("/request-shopping-assistance/{customerId}/{designerId}/{type}")
+    public ResponseEntity requestShoppingAssistance(@PathVariable Integer customerId,@PathVariable Integer designerId,@PathVariable String type) {
+
+        servicesService.requestShoppingAssistance(designerId, customerId, type);
         return ResponseEntity.status(200).body("Shopping assistance request sent.");
     }
 
@@ -123,12 +114,10 @@ public class ServicesController {
 
 
 
-    @PostMapping("/create-collaboration")
-    public ResponseEntity createCollaboration(@RequestBody @Valid Services services,Errors errors) {
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
-        designerService.createCollaboration(services);
+    @PostMapping("/create-collaboration/{designerId}/{designerId1}/{type}")
+    public ResponseEntity createCollaboration(@PathVariable Integer designerId,@PathVariable Integer designerId1,@PathVariable String type) {
+
+        designerService.createCollaboration(designerId, designerId1, type);
         return ResponseEntity.status(200).body("Collaboration request sent.");
     }
 

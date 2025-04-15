@@ -35,4 +35,9 @@ public class DesignService {
     public Design getDesignById(Integer id) {
         return designRepository.findDesignById(id);
     }
+
+    // Filter collections by price range
+    public List<Design> filterByPriceRange(Double minPrice, Double maxPrice) {
+        return designRepository.findByPriceBetween(minPrice, maxPrice);
+    }
 }

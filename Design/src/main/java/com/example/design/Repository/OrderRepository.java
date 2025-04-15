@@ -2,6 +2,7 @@ package com.example.design.Repository;
 
 
 import com.example.design.Model.Order_table;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +14,6 @@ public interface OrderRepository extends JpaRepository<Order_table,Integer> {
     Order_table findOrderById(Integer id);
 
     List<Order_table> findOrder_tableByOrderStatus(String order_status);
+
+    Order_table findByQuantity( Integer quantity);
 }

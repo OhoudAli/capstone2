@@ -20,12 +20,11 @@ public class Services {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotEmpty(message = "Type cannot be empty")
-    @Column(columnDefinition = "varchar(20) not null")
+    @Column(columnDefinition = "varchar(20) ")
     private String type;
 
-    @NotNull(message = "Designer ID cannot be null")
-    @Column(columnDefinition = "int not null")
+    @NotNull(message = "Designer ID ")
+    @Column(columnDefinition = "int")
     private Integer designerId;
 
     @Column(columnDefinition = "int")
@@ -35,7 +34,7 @@ public class Services {
     private Integer customerId;
 
     @NotEmpty(message = "Details cannot be empty")
-    @Column(columnDefinition = "varchar(200) not null")
+    @Column(columnDefinition = "varchar(200) ")
     private String details;
 
     @Column(columnDefinition = "varchar(10)")

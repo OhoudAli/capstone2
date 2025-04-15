@@ -54,7 +54,7 @@ public class OrderController {
         return order != null ? ResponseEntity.ok(order) : ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/updateStatus//{orderId}{status}")
+    @PutMapping("/updateStatus/{orderId}/{status}")
     public ResponseEntity<String> updateOrderStatus(@PathVariable Integer orderId, @PathVariable String status) {
         String response = orderService.updateOrderStatus(orderId, status);
         return response.equals("Order status updated successfully")
@@ -69,12 +69,10 @@ public class OrderController {
     }
 
 
-    @PostMapping("/purchase/{itemKind}")
-    public ResponseEntity purchaseItem(@RequestBody Order_table orderTable, @PathVariable String itemKind,Errors errors) {
-        if(errors.hasErrors()){
-            return ResponseEntity.status(400).body(errors.getFieldError().getDefaultMessage());
-        }
-        boolean success = orderService.purchaseItem(orderTable, itemKind);
+    @PostMapping("/purchase/{customerId}/{designId}")
+    public ResponseEntity purchaseItem(@PathVariable Integer customerId, @PathVariable Integer designId) {
+
+        boolean success = orderService.purchaseItem(customerId, designId);
         if (success) {
             return ResponseEntity.status(200).body("Purchase successful!");
         } else {

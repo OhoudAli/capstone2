@@ -1,11 +1,9 @@
 package com.example.design.Service;
 
 
-import com.example.design.Model.Collection;
 import com.example.design.Model.Customer;
 import com.example.design.Model.Design;
 import com.example.design.Model.Order_table;
-import com.example.design.Repository.CollectionRepository;
 import com.example.design.Repository.CustomerRepository;
 import com.example.design.Repository.DesignRepository;
 import com.example.design.Repository.OrderRepository;
@@ -21,7 +19,6 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final CollectionRepository collectionRepository;
     private final DesignRepository designRepository;
     private final CustomerRepository customerRepository;
 
@@ -79,20 +76,20 @@ public class OrderService {
     }
 
 
-public Boolean purchaseItem(Order_table orderTable,String itemKind) {
-    if (itemKind.equals("Collection")) {
-        Collection collection = collectionRepository.findCollectionById(orderTable.getCollection_id());
-        if (collection == null) {
+public Boolean purchaseItem(Integer customerId,Integer designId) {
+
+        Design design = designRepository.findDesignById(designId);
+        Customer customer = customerRepository.findCustomerById(customerId);
+        if (design == null || customer == null) {
             return false;
         }
-        orderTable.setCollection_id(orderTable.getCollection_id());
-    } else if(itemKind.equals("Design")){
-        Design design = designRepository.findDesignById(orderTable.getDesign_id());
-        if (design == null) {
-            return false;
-        }
-        orderTable.setDesign_id(orderTable.getDesign_id());
-    }
+
+        Order_table orderTable = new Order_table();
+        orderTable.setCustomer_id(customerId);
+        orderTable.setDesign_id(designId);
+        orderTable.setPrice(design.getPrice());
+    orderTable.setName(orderTable.getName());
+    orderTable.setQuantity(orderTable.getQuantity());
 
     return processPurchase(orderTable);
 
@@ -104,24 +101,16 @@ public Boolean purchaseItem(Order_table orderTable,String itemKind) {
         if (customer == null || customer.getBalance() < orderTable.getPrice()) {
             return false;
         }
-
-        if ("Collection".equals(orderTable.getItemKind())) {
-            Collection collection = collectionRepository.findCollectionById(orderTable.getCollection_id());
-            if(collection == null){
-                return false;
-            }
-            orderTable.setCollection_id(orderTable.getCollection_id());
-
-        } else if ("Design".equals(orderTable.getItemKind())) {
             Design design = designRepository.findDesignById(orderTable.getDesign_id());
             if(design == null){
                 return false;
             }
-            orderTable.setDesign_id(orderTable.getDesign_id());
-        }
+
         orderRepository.save(orderTable);
         customer.setBalance(customer.getBalance() - orderTable.getPrice());
         customer.setOrderId(orderTable.getId());
+
+
         customerRepository.save(customer);
 
         return true;

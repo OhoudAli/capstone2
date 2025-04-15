@@ -4,6 +4,7 @@ package com.example.design.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,31 +21,28 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotEmpty
-    @Column(columnDefinition = "varchar(20) not null")
+    @Column(columnDefinition = "varchar(20) ")
     private String name;
 
-    @NotEmpty
-    @Column(columnDefinition = "varchar(20) not null")
+    @Column(columnDefinition = "varchar(20) ")
     private String username;
 
-    @NotEmpty
-    @Column(columnDefinition = "varchar(20) not null")
+    @Column(columnDefinition = "varchar(20) ")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "password must contain letters ,digits and special character")
     private String password;
 
-    @NotEmpty
-    @Column(columnDefinition = "varchar(20) not null unique")
+    @Column(columnDefinition = "varchar(20)  unique")
     private String email;
 
-    @Column(columnDefinition = "int not null")
+    @Column(columnDefinition = "int ")
     private Integer orderId;
 
-    @NotNull
+
     @Positive
-    @Column(columnDefinition = "double not null")
+    @Column(columnDefinition = "double ")
     private Double balance;
 
-    @Column(columnDefinition = "int not null")
+    @Column(columnDefinition = "int ")
     private Integer designId;
 
 

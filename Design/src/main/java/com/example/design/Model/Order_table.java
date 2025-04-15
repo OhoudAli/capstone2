@@ -26,28 +26,18 @@ public class Order_table {
 
     @Column(columnDefinition = "int ")
     private Integer design_id;
-    @Column(columnDefinition = "int")
-    private Integer collection_id;
 
-    @NotEmpty
-    @Column(columnDefinition = "varchar(20) not null")
+    @Column(columnDefinition = "varchar(20) ")
     private String name;
 
-    @NotNull
-    @Column(columnDefinition = "int not null")
+    @Column(columnDefinition = "int ")
     private Integer price;
 
-    @NotNull
-    @Column(columnDefinition = "int not null")
+    @Column(columnDefinition = "int ")
     private Integer quantity;
 
     @Column(columnDefinition = "date ")
     private LocalDate orderDate =LocalDate.now();
-
-    @Column(columnDefinition = "varchar(20)")
-    @Pattern(regexp = "Collection|Design")
-    private String itemKind;
-
 
     @Column(columnDefinition = "varchar(20)")
     private String orderStatus="pending";

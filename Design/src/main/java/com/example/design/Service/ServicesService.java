@@ -63,8 +63,18 @@ public class ServicesService {
     }
 
 
-    public void requestShoppingAssistance(Services services) {
+    public void requestShoppingAssistance(Integer customerId ,Integer designerId, String type) {
+        Customer customer = customerRepository.findCustomerById(customerId);
+        Designer designer = designerRepository.findDesignerById(designerId);
+        if(designer == null || customer == null){
+            return;
+        }
+        Services services = new Services();
         services.setType("help_request");
+        services.setDesignerId(designerId);
+        services.setCustomerId(customerId);
+        String details = "Assistance request between customer " + customer.getName() + " and designer " + designer.getName();
+        services.setDetails(details);
         servicesRepository.save(services);
     }
 

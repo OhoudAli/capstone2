@@ -18,11 +18,11 @@ public class Design {
     private Integer id;
 
     @NotEmpty
-    @Column(columnDefinition = "varchar(20) not null")
+    @Column(columnDefinition = "varchar(20)")
     private String name;
 
-    @Column(columnDefinition = "int not null")
-    private Integer collectionId;
+//    @Column(columnDefinition = "int ")
+//    private Integer collectionId;
 
     @Column(columnDefinition = "int not null")
     private Integer price;

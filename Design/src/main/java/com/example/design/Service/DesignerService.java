@@ -55,12 +55,18 @@ public class DesignerService {
         return designerRepository.findDesignerById(id);
     }
 
-    public Boolean createCollaboration(Services services) {
-        services.setType("collaboration");
-        if (services.getDesignerId1() == null || services.getDesignerId() == null) {
-        return false;
-        }
+    public Boolean createCollaboration(Integer designerId, Integer designerId1, String type) {
+        Designer designer = designerRepository.findDesignerById(designerId);
+        Designer designer1 = designerRepository.findDesignerById(designerId1);
 
+        if(designer == null || designer1 == null){
+            return false;
+        }
+        Services services = new Services();
+        services.setDesignerId(designerId);
+        services.setDesignerId1(designerId1);
+        String details = "Collaboration request between designer " + designer.getName() + " and designer " + designer1.getName();
+        services.setDetails(details);
             servicesRepository.save(services);
         return true;
     }
@@ -91,12 +97,6 @@ public class DesignerService {
         return true;
     }
 
-//    public Boolean badDesigner(Integer designerId, Integer rating){
-//        if(rating >5 || rating <1) {
-//            return false;
-//        }
-//
-//    }
 
 
 

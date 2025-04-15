@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/design")
@@ -38,5 +40,9 @@ public class DesignController {
         return design != null ? ResponseEntity.ok(design) : ResponseEntity.notFound().build();
     }
 
-
+    @GetMapping("/filter/{minPrice}/{maxPrice}")
+    public ResponseEntity filterCollectionsByPrice(@PathVariable Double minPrice, @PathVariable Double maxPrice) {
+        List<Design> designs = designService.filterByPriceRange(minPrice, maxPrice);
+        return ResponseEntity.ok(designs);
+    }
 }
