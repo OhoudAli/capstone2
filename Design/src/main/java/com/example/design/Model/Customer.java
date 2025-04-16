@@ -34,16 +34,12 @@ public class Customer {
     @Column(columnDefinition = "varchar(20)  unique")
     private String email;
 
-    @Column(columnDefinition = "int ")
-    private Integer orderId;
-
 
     @Positive
     @Column(columnDefinition = "double ")
     private Double balance;
 
-    @Column(columnDefinition = "int ")
-    private Integer designId;
+
 
 
 }
